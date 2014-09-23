@@ -5,11 +5,13 @@ Christopher Lawless 2014
 **/
 var fs = require('fs');
 var express = require('express');
+var morgan = require('morgan')
 var app = express();
 
-var logFile = fs.createWriteStream('./myLog.log', {flags : 'a'});
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
 
-app.use(express.logger({stream: logFile}));
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}))
 
 
 app.get('/wait', function(request, response){
@@ -53,6 +55,6 @@ app.get('/waitfor/:waittime', function(request, response){
 });
 
 
-app.listen(9100);
+app.listen(3001);
 
-console.log("Now listening port 9100");
+console.log("Now listening port 3001");
