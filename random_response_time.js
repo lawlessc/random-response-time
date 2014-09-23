@@ -3,12 +3,14 @@ A simple node server for replying to requests at random times.
 
 Christopher Lawless 2014
 **/
-
-
-
-
+var fs = require('fs');
 var express = require('express');
 var app = express();
+
+var logFile = fs.createWriteStream('./myLog.log', {flags : 'a'});
+
+app.use(express.logger({stream: logFile}));
+
 
 app.get('/wait', function(request, response){
     console.log("request made");
@@ -52,4 +54,5 @@ app.get('/waitfor/:waittime', function(request, response){
 
 
 app.listen(9100);
+
 console.log("Now listening port 9100");
