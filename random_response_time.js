@@ -13,6 +13,9 @@ var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}))
 
+app.get('/helloworld', function(req, res) {
+	res.send("Hello World!");
+});
 
 app.get('/wait', function(request, response){
     console.log("request made");
@@ -55,6 +58,6 @@ app.get('/waitfor/:waittime', function(request, response){
 });
 
 
-app.listen(3001);
+app.listen(9001);
 
 console.log("Now listening port 3001");
